@@ -21,7 +21,7 @@ public class MailService {
         try {
             mimeMessageHelper.setTo(customer.getEmail());
 //            mimeMessageHelper.setText("mailsender");
-            mimeMessageHelper.setText("<a href='http://localhost:8080/customers/activate/"+customer.getId()+"'>click to activate</a>",true);
+            mimeMessageHelper.setText("<a href='http://localhost:8080/customers/activate/"+customer.getActivationToken().getToken()+"'>click to activate</a>",true);
             mimeMessageHelper.setReplyTo("m");
             mimeMessageHelper.setSubject("subject");
             mimeMessageHelper.setFrom(new InternetAddress("nazar.voinarovych250@gmail.com"));

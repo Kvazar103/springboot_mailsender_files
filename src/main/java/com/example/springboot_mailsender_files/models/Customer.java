@@ -1,11 +1,9 @@
 package com.example.springboot_mailsender_files.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
+import lombok.ToString;
 
 @Entity
 public class Customer {
@@ -22,12 +20,24 @@ public class Customer {
     private String email;
     private boolean isActivated=false;
 
-    public Customer(String name, String email,boolean isActivated) {
+    @ToString.Exclude
+    @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL) //cascadetype.all при видалені юзера видаляється і токен
+    private ActivationToken activationToken;
+    public Customer(String name, String email,boolean isActivated,ActivationToken activationToken) {
         this.name = name;
         this.email = email;
         this.isActivated=isActivated;
+        this.activationToken=activationToken;
     }
     public Customer() {
+    }
+
+    public ActivationToken getActivationToken() {
+        return activationToken;
+    }
+
+    public void setActivationToken(ActivationToken activationToken) {
+        this.activationToken = activationToken;
     }
 
     public boolean isActivated() {

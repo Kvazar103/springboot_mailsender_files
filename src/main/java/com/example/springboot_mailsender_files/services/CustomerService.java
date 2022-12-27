@@ -1,10 +1,12 @@
 package com.example.springboot_mailsender_files.services;
 
 import com.example.springboot_mailsender_files.dao.CustomerDAO;
+import com.example.springboot_mailsender_files.models.ActivationToken;
 import com.example.springboot_mailsender_files.models.Customer;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -15,6 +17,7 @@ public class CustomerService {
     private MailService mailService;
 
     public void save(Customer customer){
+        customer.setActivationToken(new ActivationToken());
         customerDAO.save(customer);
         mailService.send(customer);
     }
@@ -31,6 +34,16 @@ public class CustomerService {
     }
     public void updateCustomer(Customer customer){
         customerDAO.save(customer);
+    }
+    public Customer byToken(String token){
+
+       return customerDAO.byToken(token);
+    }
+    public void activate(Customer customer){
+        if(customer.getActivationToken().getExpire().isAfter(LocalDateTime.now())){
+            customer.setActivated(true);
+            updateCustomer(customer);
+        }
     }
 
 }
