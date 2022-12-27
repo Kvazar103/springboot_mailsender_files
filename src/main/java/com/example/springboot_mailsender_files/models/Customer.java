@@ -21,12 +21,20 @@ public class Customer {
     @NotEmpty(message = "Email cannot be empty")
     private String email;
     private boolean isActivated=false;
+    private String avatar; //path to image
 
-    public Customer(String name, String email,boolean isActivated) {
+    public Customer(String name, String email,boolean isActivated,String avatar) {
         this.name = name;
         this.email = email;
         this.isActivated=isActivated;
+        this.avatar=avatar;
     }
+    public Customer(String name, String email,String avatar) {
+        this.name = name;
+        this.email = email;
+        this.avatar=avatar;
+    }
+
     public Customer() {
     }
 
@@ -36,6 +44,14 @@ public class Customer {
 
     public void setActivated(boolean activated) {
         isActivated = activated;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 
     public int getId() {
